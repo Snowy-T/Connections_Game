@@ -6,7 +6,7 @@ package com.mycompany.connections;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JFrame;
+import javax.swing.*;
 
 /**
  *
@@ -18,10 +18,13 @@ public class MainFrame extends JFrame implements ActionListener{
     GamePanel gamePanel;
     User user;
     UserLogin userLogin;
+    ImageIcon imageIcon;
 
     public MainFrame(){
         this.setTitle("Connections");
         this.setSize(1016, 700);
+        imageIcon = new ImageIcon("logo.png");
+        this.setIconImage(imageIcon.getImage());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(null);
         this.setResizable(false);
