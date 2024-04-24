@@ -199,12 +199,12 @@ public class GamePanel extends JPanel implements ActionListener{
         if(e.getSource() == btn_word11){
             if(buttonCounter < 4){
 
-                if(btn_word11.isEnabled()){
+                if(btn_word11.isSelected()){
                     changeButtonColor(btn_word11);
                     buttonCounter++;
                 }
             }
-            if(!btn_word11.isEnabled()){
+            if(!btn_word11.isSelected()){
                 resetButtonColor(btn_word11);
                 buttonCounter--;
             }
@@ -212,8 +212,6 @@ public class GamePanel extends JPanel implements ActionListener{
 
         if(e.getSource() == btn_word12){
             if(buttonCounter < 4){
-                boolean isSelected = btn_word12.isSelected();
-                btn_word12.setSelected(!isSelected);
 
                 if(btn_word12.isSelected()){
                     changeButtonColor(btn_word12);
@@ -228,8 +226,6 @@ public class GamePanel extends JPanel implements ActionListener{
 
         if(e.getSource() == btn_word13){
             if(buttonCounter < 4){
-                boolean isSelected = btn_word13.isSelected();
-                btn_word13.setSelected(!isSelected);
 
                 if(btn_word13.isSelected()){
                     changeButtonColor(btn_word13);
@@ -244,8 +240,6 @@ public class GamePanel extends JPanel implements ActionListener{
 
         if(e.getSource() == btn_word14){
             if(buttonCounter < 4){
-                boolean isSelected = btn_word14.isSelected();
-                btn_word14.setSelected(!isSelected);
 
                 if(btn_word14.isSelected()){
                     changeButtonColor(btn_word14);
@@ -260,8 +254,6 @@ public class GamePanel extends JPanel implements ActionListener{
 
         if(e.getSource() == btn_word21){
             if(buttonCounter < 4){
-                boolean isSelected = btn_word21.isSelected();
-                btn_word21.setSelected(!isSelected);
 
                 if(btn_word21.isSelected()){
                     changeButtonColor(btn_word21);
@@ -276,16 +268,15 @@ public class GamePanel extends JPanel implements ActionListener{
 
         if(e.getSource() == btn_word22){
             if(buttonCounter < 4){
-                boolean isSelected = btn_word22.isSelected();
-                btn_word22.setSelected(!isSelected);
 
                 if(btn_word22.isSelected()){
                     changeButtonColor(btn_word22);
                     buttonCounter++;
-                }else {
-                    resetButtonColor(btn_word22);
-                    buttonCounter--;
                 }
+            }
+            if(!btn_word22.isSelected()){
+                resetButtonColor(btn_word21);
+                buttonCounter--;
             }
         }//end of if btn_word22
 
