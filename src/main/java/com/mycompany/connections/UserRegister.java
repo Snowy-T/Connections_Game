@@ -15,9 +15,9 @@ public class UserRegister {
     public void registerUser() {
         try {
             statement = SingeltonConnection.getInstanz().getConnection().createStatement();
-            statement.executeUpdate("INSERT INTO userdata (username, password) VALUES ('" + user.getUsername() + "', '" + user.getPassword() + "')");
+            statement.executeUpdate("INSERT INTO userdata (username, password) VALUES ('" + user.getNickname() + "', '" + user.getPsw() + "')");
 
-            System.out.println(user + " has been registered successfully!");
+            System.out.println(user.getNickname() + " has been registered successfully!");
         } catch (Exception e) {
             e.printStackTrace();
         }

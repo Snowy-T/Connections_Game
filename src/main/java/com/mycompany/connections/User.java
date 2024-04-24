@@ -2,30 +2,30 @@ package com.mycompany.connections;
 
 public class User {
 
-    private String username;
-    private String password;
-    private int nrOfGamesWon;
+    private String nickname;
+    private String psw;
+    private int nrOfGamesWon = 0;
+    private int nrOfGamesPlayed= 0;
 
-    public User(String username, String password, int nrOfGamesWon) {
-        this.username = username;
-        this.password = password;
-        this.nrOfGamesWon = nrOfGamesWon;
+    public User(String username, String password) {
+        this.nickname = username;
+        this.psw = password;
     }
 
-    public String getUsername() {
-        return username;
+    public String getNickname() {
+        return nickname;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPsw() {
+        return psw;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPsw(String psw) {
+        this.psw = psw;
     }
 
     public int getNrOfGamesWon() {
@@ -34,5 +34,13 @@ public class User {
 
     public void setNrOfGamesWon(int nrOfGamesWon) {
         this.nrOfGamesWon = nrOfGamesWon;
+    }
+
+    public int getNrOfGamesPlayed() {
+        return nrOfGamesPlayed;
+    }
+
+    public void setNrOfGamesPlayed(int nrOfGamesPlayed) {
+        this.nrOfGamesPlayed = nrOfGamesPlayed;
     }
 }

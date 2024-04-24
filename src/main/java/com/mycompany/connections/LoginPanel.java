@@ -73,7 +73,7 @@ public class LoginPanel extends JPanel implements ActionListener{
                     pass += c;
                 }
 
-                user = new User(username, pass, 0);
+                user = new User(username, pass);
                 userRegister = new UserRegister(user);
 
                 txt_username.setText("");

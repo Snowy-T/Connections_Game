@@ -15,8 +15,8 @@ public class UserLogin {
     }
 
     public boolean loginUser(){
-        String username = user.getUsername();
-        String pass = user.getPassword();
+        String username = user.getNickname();
+        String pass = user.getPsw();
 
         try{
             preparedStatement = SingeltonConnection.getInstanz().getConnection().prepareStatement("SELECT * FROM userdata WHERE username = ? AND password = ?");
@@ -26,7 +26,7 @@ public class UserLogin {
             resultSet = preparedStatement.executeQuery();
 
             if(resultSet.next()){
-                System.out.println(user.getUsername() + " has been logged in successfully!");
+                System.out.println(user.getNickname() + " has been logged in successfully!");
                 return true;
             }else{
                 System.out.println("Invalid username or password!");

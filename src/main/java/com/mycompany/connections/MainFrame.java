@@ -32,12 +32,12 @@ public class MainFrame extends JFrame implements ActionListener{
 
         loginPanel = new LoginPanel();
         loginPanel.setBounds(0, 0, 1016, 700);
-        //this.add(loginPanel);
+        this.add(loginPanel);
 
         gamePanel = new GamePanel();
         gamePanel.setBounds(0, 0, 1016, 700);
         this.add(gamePanel);
-        gamePanel.setVisible(true);
+        gamePanel.setVisible(false);
 
         loginPanel.btn_login.addActionListener(this);
 
@@ -57,7 +57,7 @@ public class MainFrame extends JFrame implements ActionListener{
                     pass += c;
                 }
 
-                user = new User(username, pass, 0);
+                user = new User(username, pass);
                 userLogin = new UserLogin(user);
 
                 if(userLogin.loginUser()){

@@ -55,11 +55,11 @@ public class GetWordsWithCategory {
     public void asignWordsToCategory() {
         try {
             statement = SingeltonConnection.getInstanz().getConnection().createStatement();
-            resultSet = statement.executeQuery("SELECT w.word,c.category,c.cid FROM words w " +
-                                                    "INNER JOIN category c ON w.cid = c.cid");
+            resultSet = statement.executeQuery("SELECT w.wname,c.cname,c.cid FROM word w " +
+                    "INNER JOIN category c ON w.cid = c.cid");
 
             while(resultSet.next()) {
-                String word = resultSet.getString("word");
+                String word = resultSet.getString("wname");
                 String category = resultSet.getString("cid");
 
                 if(wordsOfFirstCategory.size() <= 3 && category.equals(randomCategory)){
@@ -109,7 +109,7 @@ public class GetWordsWithCategory {
                     category4 = resultSet.getString("cname");
                     idOfFourthCategory = randomCategory;
                 }
-        }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -119,9 +119,9 @@ public class GetWordsWithCategory {
         String category = "";
         try {
             System.out.println("Word: " + word);
-            String sqlWord = "SELECT c.category FROM words w " +
-                         "INNER JOIN category c ON w.cid = c.cid " +
-                         "WHERE w.name = '" + word+ "'";
+            String sqlWord = "SELECT c.cname FROM word w " +
+                    "INNER JOIN category c ON w.cid = c.cid " +
+                    "WHERE w.wname = '" + word+ "'";
 
             statement = SingeltonConnection.getInstanz().getConnection().createStatement();
             resultSet = statement.executeQuery(sqlWord);
