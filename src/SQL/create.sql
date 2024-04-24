@@ -1,7 +1,9 @@
 CREATE TABLE userdata(
     uid SERIAL PRIMARY KEY,
     username VARCHAR(50) NOT NULL,
-    password varchar(50) NOT NULL
+    password varchar(50) NOT NULL,
+    numberOfGamesPlayed int,
+	numberOfGamesWon int
 );
 
 CREATE TABLE category(
