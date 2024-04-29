@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.RoundRectangle2D;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -27,7 +28,6 @@ public class GamePanel extends JPanel implements ActionListener{
     GetWordsWithCategory getWordsWithCategory = new GetWordsWithCategory();
     Random random = new Random();
 
-    String word11 = "test", word12, word13, word14, word21, word22, word23, word24, word31, word32, word33, word34, word41, word42, word43, word44;
     int remainingTries = 4;
     int buttonCounter = 0;
 
@@ -362,7 +362,7 @@ public class GamePanel extends JPanel implements ActionListener{
         if(e.getSource() == btn_submit){
             if(remainingTries <= 0){
                 remainingTries = 0;
-            }else {
+            }else if(!checkIfWordsAreInSameCategory()){
                 remainingTries--;
             }
             lbl_remainingTries.setText("Remaining Tries: " + remainingTries);
@@ -417,6 +417,42 @@ public class GamePanel extends JPanel implements ActionListener{
             button.setText(word);
             listOfWords.remove(randomIndex);
         }
+    }
+
+    public boolean checkIfWordsAreInSameCategory(){
+        ArrayList<Word> words = getWordsWithCategory.getAllWords();
+        ArrayList<Word> wordListToCheck = new ArrayList<Word>();
+
+        for(JToggleButton button : btnList){
+            for(Word word : words){
+                if(button.isSelected()){
+                    if(button.getText().equalsIgnoreCase(word.getValue())){
+                        wordListToCheck.add(word);
+                    }
+                }
+            }
+        }
+
+        if(wordListToCheck.size() == 4){
+            String category = wordListToCheck.get(0).getCategory();
+            for(Word word : wordListToCheck){
+                if(!category.equalsIgnoreCase(word.getCategory())){
+                    return false;
+                }
+            }
+            for(JToggleButton button : btnList){
+                if(button.getText().equalsIgnoreCase(wordListToCheck.get(0).getValue()) || button.getText().equalsIgnoreCase(wordListToCheck.get(1).getValue()) || button.getText().equalsIgnoreCase(wordListToCheck.get(2).getValue()) || button.getText().equalsIgnoreCase(wordListToCheck.get(3).getValue())) {
+                    button.setUI(new CustomToggleButtonUI(new Color(0x5a594e), Color.GREEN));
+                    button.setEnabled(false);
+                    button.setSelected(false);
+                }
+            }
+            buttonCounter = 0;
+            System.out.println("All words are in the same category!");
+            return true;
+        }
+        System.out.println("Words are not in the same category!");
+        return false;
     }
 
     public void lowerOrHigherBtnCounter(JToggleButton button){
