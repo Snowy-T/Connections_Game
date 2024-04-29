@@ -8,6 +8,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.RoundRectangle2D;
+import java.util.ArrayList;
+import java.util.Arrays;
 import javax.swing.*;
 import javax.swing.border.AbstractBorder;
 
@@ -20,6 +22,7 @@ public class GamePanel extends JPanel implements ActionListener{
     JToggleButton btn_word11, btn_word12, btn_word13, btn_word14, btn_word21, btn_word22, btn_word23, btn_word24, btn_word31, btn_word32, btn_word33, btn_word34, btn_word41, btn_word42, btn_word43, btn_word44;
     JButton btn_submit, btn_deselect, btn_shuffle;
     JLabel lbl_info, lbl_remainingTries;
+    ArrayList<JToggleButton> btnList = new ArrayList<JToggleButton>(Arrays.asList(btn_word11, btn_word12, btn_word13, btn_word14, btn_word21, btn_word22, btn_word23, btn_word24, btn_word31, btn_word32, btn_word33, btn_word34, btn_word41, btn_word42, btn_word43, btn_word44));
 
     String word11 = "test", word12, word13, word14, word21, word22, word23, word24, word31, word32, word33, word34, word41, word42, word43, word44;
     int remainingTries = 4;
@@ -35,23 +38,22 @@ public class GamePanel extends JPanel implements ActionListener{
         this.add(lbl_info);
 
         btn_word11 = new JToggleButton(word11);
+        btn_word11.setUI(new CustomToggleButtonUI(new Color(0x5a594e), new Color(0xefefe6)));
         btn_word11.setFont(new Font("Sanserif", Font.BOLD, 20));
         btn_word11.setBounds(185, 70, 150, 80);
-        btn_word11.setBackground(new Color(0xefefe6));
         btn_word11.setBorder(new RoundBorder(16));
         this.add(btn_word11);
 
         btn_word12 = new JToggleButton(word12);
+        btn_word12.setUI(new CustomToggleButtonUI(new Color(0x5a594e), new Color(0xefefe6)));
         btn_word12.setFont(new Font("Sanserif", Font.BOLD, 20));
         btn_word12.setBounds(345, 70, 150, 80);
-        btn_word12.setBackground(new Color(0xefefe6));
         btn_word12.setBorder(new RoundBorder(16));
         this.add(btn_word12);
 
         btn_word13 = new JToggleButton(word13);
         btn_word13.setFont(new Font("Sanserif", Font.BOLD, 20));
         btn_word13.setBounds(505, 70, 150, 80);
-        btn_word13.setBackground(new Color(0xefefe6));
         btn_word13.setBorder(new RoundBorder(16));
         this.add(btn_word13);
 
