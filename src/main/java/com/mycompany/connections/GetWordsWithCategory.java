@@ -9,10 +9,11 @@ import java.util.Random;
 
 public class GetWordsWithCategory {
 
-    ArrayList<String> wordsOfFirstCategory = new ArrayList<>();
-    ArrayList<String> wordsOfSecondCategory = new ArrayList<>();
-    ArrayList<String> wordsOfThirdCategory = new ArrayList<>();
-    ArrayList<String> wordsOfFourthCategory = new ArrayList<>();
+    ArrayList<Word> wordsOfFirstCategory = new ArrayList<>();
+    ArrayList<Word> wordsOfSecondCategory = new ArrayList<>();
+    ArrayList<Word> wordsOfThirdCategory = new ArrayList<>();
+    ArrayList<Word> wordsOfFourthCategory = new ArrayList<>();
+    ArrayList<Word> allWords = new ArrayList<>();
     Statement statement;
     ResultSet resultSet;
     Random random;
@@ -30,26 +31,6 @@ public class GetWordsWithCategory {
         randomCategory = String.valueOf(selectRandomCategory);
         asignWordsToCategory();
 
-        //TODO: Delete after testing
-        System.out.println("Category 1: " + category1);
-        for (String word : wordsOfFirstCategory) {
-            System.out.println(word);
-        }
-        System.out.println("-------------------");
-        System.out.println("Category 2: " + category2);
-        for (String word : wordsOfSecondCategory) {
-            System.out.println(word);
-        }
-        System.out.println("-------------------");
-        System.out.println("Category 3: " + category3);
-        for (String word : wordsOfThirdCategory) {
-            System.out.println(word);
-        }
-        System.out.println("-------------------");
-        System.out.println("Category 4: " + category4);
-        for (String word : wordsOfFourthCategory) {
-            System.out.println(word);
-        }
     }
 
     public void asignWordsToCategory() {
@@ -63,8 +44,10 @@ public class GetWordsWithCategory {
                 String category = resultSet.getString("cid");
 
                 if(wordsOfFirstCategory.size() <= 3 && category.equals(randomCategory)){
-                    wordsOfFirstCategory.add(word);
                     category1 = resultSet.getString("cname");
+                    Word word1 = new Word(word, category1);
+                    wordsOfFirstCategory.add(word1);
+                    allWords.add(word1);
                     idOfFirstCategory= randomCategory;
                     if(wordsOfFirstCategory.size() > 3){
                         selectRandomCategory = random.nextInt(20) + 1;
@@ -77,8 +60,10 @@ public class GetWordsWithCategory {
                 }
 
                 if(wordsOfFirstCategory.size() > 3 && wordsOfSecondCategory.size() <= 3 && category.equals(randomCategory) && !category.equals(idOfFirstCategory)) {
-                    wordsOfSecondCategory.add(word);
                     category2 = resultSet.getString("cname");
+                    Word word2 = new Word(word, category2);
+                    wordsOfSecondCategory.add(word2);
+                    allWords.add(word2);
                     idOfSecondCategory = randomCategory;
                     if(wordsOfSecondCategory.size() > 3) {
                         selectRandomCategory = random.nextInt(20) + 1;
@@ -91,8 +76,10 @@ public class GetWordsWithCategory {
                 }
 
                 if(wordsOfFirstCategory.size() > 3 && wordsOfSecondCategory.size() > 3 && wordsOfThirdCategory.size() <= 3 && category.equals(randomCategory) && !category.equals(idOfFirstCategory) && !category.equals(idOfSecondCategory)) {
-                    wordsOfThirdCategory.add(word);
                     category3 = resultSet.getString("cname");
+                    Word word3 = new Word(word, category3);
+                    wordsOfThirdCategory.add(word3);
+                    allWords.add(word3);
                     idOfThirdCategory = randomCategory;
                     if(wordsOfThirdCategory.size() > 3) {
                         selectRandomCategory = random.nextInt(20) + 1;
@@ -105,8 +92,10 @@ public class GetWordsWithCategory {
                 }
 
                 if(wordsOfFirstCategory.size() > 3 && wordsOfSecondCategory.size() > 3 && wordsOfThirdCategory.size() > 3 && wordsOfFourthCategory.size() <= 3 && category.equals(randomCategory) && !category.equals(idOfFirstCategory) && !category.equals(idOfSecondCategory) && !category.equals(idOfThirdCategory)) {
-                    wordsOfFourthCategory.add(word);
                     category4 = resultSet.getString("cname");
+                    Word word4 = new Word(word, category4);
+                    wordsOfFourthCategory.add(word4);
+                    allWords.add(word4);
                     idOfFourthCategory = randomCategory;
                 }
             }
@@ -136,19 +125,19 @@ public class GetWordsWithCategory {
         return category;
     }
 
-    public ArrayList<String> getWordsOfFirstCategory() {
+    public ArrayList<Word> getWordsOfFirstCategory() {
         return wordsOfFirstCategory;
     }
 
-    public ArrayList<String> getWordsOfSecondCategory() {
+    public ArrayList<Word> getWordsOfSecondCategory() {
         return wordsOfSecondCategory;
     }
 
-    public ArrayList<String> getWordsOfThirdCategory() {
+    public ArrayList<Word> getWordsOfThirdCategory() {
         return wordsOfThirdCategory;
     }
 
-    public ArrayList<String> getWordsOfFourthCategory() {
+    public ArrayList<Word> getWordsOfFourthCategory() {
         return wordsOfFourthCategory;
     }
 

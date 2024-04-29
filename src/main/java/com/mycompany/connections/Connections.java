@@ -13,7 +13,7 @@ public class Connections {
     public static void main(String[] args) {
 
         MainFrame mainFrame = new MainFrame();
-
+        /*
         GetWordsWithCategory getWordsWithCategory = new GetWordsWithCategory();
 
         String word1 = getWordsWithCategory.getWordsOfSecondCategory().get(0);
@@ -29,6 +29,6 @@ public class Connections {
         System.out.println("Category of first word: " + category1fFirstWord);
         System.out.println("Category of second word: " + category2fFirstWord);
         System.out.println("Category of third word: " + category3fFirstWord);
-        System.out.println("Category of fourth word: " + category4fFirstWord);
+        System.out.println("Category of fourth word: " + category4fFirstWord);*/
     }
 }
