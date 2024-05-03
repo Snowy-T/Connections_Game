@@ -22,9 +22,10 @@ import javax.swing.border.AbstractBorder;
 public class GamePanel extends JPanel implements ActionListener{
 
     JToggleButton btn_word11, btn_word12, btn_word13, btn_word14, btn_word21, btn_word22, btn_word23, btn_word24, btn_word31, btn_word32, btn_word33, btn_word34, btn_word41, btn_word42, btn_word43, btn_word44;
-    JButton btn_submit, btn_deselect, btn_shuffle;
+    JButton btn_submit, btn_deselect, btn_shuffle,btn_newGame;
     JLabel lbl_info, lbl_remainingTries;
     ArrayList<JToggleButton> btnList = new ArrayList<JToggleButton>();
+    ArrayList<JToggleButton> correctBtns = new ArrayList<JToggleButton>();
     GetWordsWithCategory getWordsWithCategory = new GetWordsWithCategory();
     Random random = new Random();
 
@@ -178,6 +179,13 @@ public class GamePanel extends JPanel implements ActionListener{
         btn_submit.setBackground(Color.WHITE);
         btn_submit.setBorder(new RoundBorder(40));
         this.add(btn_submit);
+
+        btn_newGame = new JButton("New Game");
+        btn_newGame.setFont(new Font("Sanserif", Font.BOLD, 16));
+        btn_newGame.setBounds(400, 560, 200, 40);
+        btn_newGame.setBackground(Color.WHITE);
+        btn_newGame.setBorder(new RoundBorder(40));
+        this.add(btn_newGame);
 
         btnList.addAll(Arrays.asList(btn_word11, btn_word12, btn_word13, btn_word14, btn_word21, btn_word22, btn_word23, btn_word24, btn_word31, btn_word32, btn_word33, btn_word34, btn_word41, btn_word42, btn_word43, btn_word44));
         assignWordToBtn(getWordsWithCategory.getAllWords());
@@ -409,14 +417,18 @@ public class GamePanel extends JPanel implements ActionListener{
         ArrayList<String> listOfWords = new ArrayList<String>();
 
         for(JToggleButton button : btnList){
-            listOfWords.add(button.getText());
+            if(!checkIfButtonsAreCorrect(button)){
+                listOfWords.add(button.getText());
+            }
         }
 
         for(JToggleButton button : btnList){
-            int randomIndex = random.nextInt(listOfWords.size());
-            String word = listOfWords.get(randomIndex);
-            button.setText(word);
-            listOfWords.remove(randomIndex);
+            if(!checkIfButtonsAreCorrect(button)){
+                int randomIndex = random.nextInt(listOfWords.size());
+                String word = listOfWords.get(randomIndex);
+                button.setText(word);
+                listOfWords.remove(randomIndex);
+            }
         }
     }
 
@@ -444,6 +456,8 @@ public class GamePanel extends JPanel implements ActionListener{
             for(JToggleButton button : btnList){
                 if(button.getText().equalsIgnoreCase(wordListToCheck.get(0).getValue()) || button.getText().equalsIgnoreCase(wordListToCheck.get(1).getValue()) || button.getText().equalsIgnoreCase(wordListToCheck.get(2).getValue()) || button.getText().equalsIgnoreCase(wordListToCheck.get(3).getValue())) {
                     button.setUI(new CustomToggleButtonUI(new Color(0x5a594e), Color.GREEN));
+                    correctBtns.add(button);
+                    //TODO: make different color for the buttons
                     button.setEnabled(false);
                     button.setSelected(false);
                 }
@@ -467,7 +481,7 @@ public class GamePanel extends JPanel implements ActionListener{
 
     public void makeUnSelectedBtnsSelectable(){
         for(JToggleButton button : btnList){
-            if(!button.isSelected()){
+            if(!button.isSelected() && !checkIfButtonsAreCorrect(button)){
                 button.setEnabled(true);
             }
         }
@@ -475,9 +489,20 @@ public class GamePanel extends JPanel implements ActionListener{
 
     public void unsetAllButtons(){
         for(JToggleButton button : btnList){
-            button.setSelected(false);
-            button.setEnabled(true);
+            if(!checkIfButtonsAreCorrect(button)){
+                button.setSelected(false);
+                button.setEnabled(true);
+            }
         }
+    }
+
+    public boolean checkIfButtonsAreCorrect(JToggleButton button){
+        for(JToggleButton btn : correctBtns){
+            if(btn == button){
+                return true;
+            }
+        }
+        return false;
     }
 
     static class RoundBorder extends AbstractBorder {
