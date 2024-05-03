@@ -269,7 +269,6 @@ public class GamePanel extends JPanel implements ActionListener{
             unsetAllButtons();
         }//end of if btn_deselect
 
-        //TODO: Implement the logic for the game
         if(e.getSource() == btn_submit){
             if(remainingTries <= 0){
                 remainingTries = 0;
@@ -277,7 +276,6 @@ public class GamePanel extends JPanel implements ActionListener{
                 remainingTries--;
                 if(remainingTries == 0){
                     lbl_info.setText("Game Over!");
-                    //TODO: add the correct category to the buttons
                     unsetAllButtons();
                     JOptionPane.showMessageDialog(this, "Game Over!");
                 }
