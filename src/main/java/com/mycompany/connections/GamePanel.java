@@ -22,15 +22,26 @@ import javax.swing.border.AbstractBorder;
 public class GamePanel extends JPanel implements ActionListener{
 
     JToggleButton btn_word11, btn_word12, btn_word13, btn_word14, btn_word21, btn_word22, btn_word23, btn_word24, btn_word31, btn_word32, btn_word33, btn_word34, btn_word41, btn_word42, btn_word43, btn_word44;
-    JButton btn_submit, btn_deselect, btn_shuffle,btn_newGame;
+    JButton btn_submit, btn_deselect, btn_shuffle;
+    RoundedButtonUI btn_newGame;
     JLabel lbl_info, lbl_remainingTries;
     ArrayList<JToggleButton> btnList = new ArrayList<JToggleButton>();
     ArrayList<JToggleButton> correctBtns = new ArrayList<JToggleButton>();
+    ArrayList<Color> colors = new ArrayList<Color>(){{
+        add(new Color(0xba81c5));
+        add(new Color(0xb0c4ef));
+        add(new Color(0xa0c35a));
+        add(new Color(0xf9df6d));
+    }};
     GetWordsWithCategory getWordsWithCategory = new GetWordsWithCategory();
     Random random = new Random();
 
     int remainingTries = 4;
     int buttonCounter = 0;
+    int buttonX = 185;
+    int buttonY = 70;
+    int buttonWidth = 150;
+    int buttonHeight = 80;
 
     public GamePanel(){
         this.setLayout(null);
@@ -41,118 +52,9 @@ public class GamePanel extends JPanel implements ActionListener{
         lbl_info.setBounds(399, 22, 202, 22);
         this.add(lbl_info);
 
-        btn_word11 = new JToggleButton();
-        btn_word11.setUI(new CustomToggleButtonUI(new Color(0x5a594e), new Color(0xefefe6)));
-        btn_word11.setFont(new Font("Sanserif", Font.BOLD, 20));
-        btn_word11.setBounds(185, 70, 150, 80);
-        btn_word11.setBorder(new RoundBorder(16));
-        this.add(btn_word11);
-
-        btn_word12 = new JToggleButton();
-        btn_word12.setUI(new CustomToggleButtonUI(new Color(0x5a594e), new Color(0xefefe6)));
-        btn_word12.setFont(new Font("Sanserif", Font.BOLD, 20));
-        btn_word12.setBounds(345, 70, 150, 80);
-        btn_word12.setBorder(new RoundBorder(16));
-        this.add(btn_word12);
-
-        btn_word13 = new JToggleButton();
-        btn_word13.setUI(new CustomToggleButtonUI(new Color(0x5a594e), new Color(0xefefe6)));
-        btn_word13.setFont(new Font("Sanserif", Font.BOLD, 20));
-        btn_word13.setBounds(505, 70, 150, 80);
-        btn_word13.setBorder(new RoundBorder(16));
-        this.add(btn_word13);
-
-        btn_word14 = new JToggleButton();
-        btn_word14.setUI(new CustomToggleButtonUI(new Color(0x5a594e), new Color(0xefefe6)));
-        btn_word14.setFont(new Font("Sanserif", Font.BOLD, 20));
-        btn_word14.setBounds(665, 70, 150, 80);
-        btn_word14.setBorder(new RoundBorder(16));
-        this.add(btn_word14);
-
-        btn_word21 = new JToggleButton();
-        btn_word21.setUI(new CustomToggleButtonUI(new Color(0x5a594e), new Color(0xefefe6)));
-        btn_word21.setFont(new Font("Sanserif", Font.BOLD, 20));
-        btn_word21.setBounds(185, 160, 150, 80);
-        btn_word21.setBorder(new RoundBorder(16));
-        this.add(btn_word21);
-
-        btn_word22 = new JToggleButton();
-        btn_word22.setUI(new CustomToggleButtonUI(new Color(0x5a594e), new Color(0xefefe6)));
-        btn_word22.setFont(new Font("Sanserif", Font.BOLD, 20));
-        btn_word22.setBounds(345, 160, 150, 80);
-        btn_word22.setBorder(new RoundBorder(16));
-        this.add(btn_word22);
-
-        btn_word23 = new JToggleButton();
-        btn_word23.setUI(new CustomToggleButtonUI(new Color(0x5a594e), new Color(0xefefe6)));
-        btn_word23.setFont(new Font("Sanserif", Font.BOLD, 20));
-        btn_word23.setBounds(505, 160, 150, 80);
-        btn_word23.setBorder(new RoundBorder(16));
-        this.add(btn_word23);
-
-        btn_word24 = new JToggleButton();
-        btn_word24.setUI(new CustomToggleButtonUI(new Color(0x5a594e), new Color(0xefefe6)));
-        btn_word24.setFont(new Font("Sanserif", Font.BOLD, 20));
-        btn_word24.setBounds(665, 160, 150, 80);
-        btn_word24.setBorder(new RoundBorder(16));
-        this.add(btn_word24);
-
-        btn_word31 = new JToggleButton();
-        btn_word31.setUI(new CustomToggleButtonUI(new Color(0x5a594e), new Color(0xefefe6)));
-        btn_word31.setFont(new Font("Sanserif", Font.BOLD, 20));
-        btn_word31.setBounds(185, 250, 150, 80);
-        btn_word31.setBorder(new RoundBorder(16));
-        this.add(btn_word31);
-
-        btn_word32 = new JToggleButton();
-        btn_word32.setUI(new CustomToggleButtonUI(new Color(0x5a594e), new Color(0xefefe6)));
-        btn_word32.setFont(new Font("Sanserif", Font.BOLD, 20));
-        btn_word32.setBounds(345, 250, 150, 80);
-        btn_word32.setBorder(new RoundBorder(16));
-        this.add(btn_word32);
-
-        btn_word33 = new JToggleButton();
-        btn_word33.setUI(new CustomToggleButtonUI(new Color(0x5a594e), new Color(0xefefe6)));
-        btn_word33.setFont(new Font("Sanserif", Font.BOLD, 20));
-        btn_word33.setBounds(505, 250, 150, 80);
-        btn_word33.setBorder(new RoundBorder(16));
-        this.add(btn_word33);
-
-        btn_word34 = new JToggleButton();
-        btn_word34.setUI(new CustomToggleButtonUI(new Color(0x5a594e), new Color(0xefefe6)));
-        btn_word34.setFont(new Font("Sanserif", Font.BOLD, 20));
-        btn_word34.setBounds(665, 250, 150, 80);
-        btn_word34.setBorder(new RoundBorder(16));
-        this.add(btn_word34);
-
-        btn_word41 = new JToggleButton();
-        btn_word41.setUI(new CustomToggleButtonUI(new Color(0x5a594e), new Color(0xefefe6)));
-        btn_word41.setFont(new Font("Sanserif", Font.BOLD, 20));
-        btn_word41.setBounds(185, 340, 150, 80);
-        btn_word41.setBackground(new Color(0xefefe6));
-        btn_word41.setBorder(new RoundBorder(16));
-        this.add(btn_word41);
-
-        btn_word42 = new JToggleButton();
-        btn_word42.setUI(new CustomToggleButtonUI(new Color(0x5a594e), new Color(0xefefe6)));
-        btn_word42.setFont(new Font("Sanserif", Font.BOLD, 20));
-        btn_word42.setBounds(345, 340, 150, 80);
-        btn_word42.setBorder(new RoundBorder(16));
-        this.add(btn_word42);
-
-        btn_word43 = new JToggleButton();
-        btn_word43.setUI(new CustomToggleButtonUI(new Color(0x5a594e), new Color(0xefefe6)));
-        btn_word43.setFont(new Font("Sanserif", Font.BOLD, 20));
-        btn_word43.setBounds(505, 340, 150, 80);
-        btn_word43.setBorder(new RoundBorder(16));
-        this.add(btn_word43);
-
-        btn_word44 = new JToggleButton();
-        btn_word44.setUI(new CustomToggleButtonUI(new Color(0x5a594e), new Color(0xefefe6)));
-        btn_word44.setFont(new Font("Sanserif", Font.BOLD, 20));
-        btn_word44.setBounds(665, 340, 150, 80);
-        btn_word44.setBorder(new RoundBorder(16));
-        this.add(btn_word44);
+        instantiateButtons();
+        btnList.addAll(Arrays.asList(btn_word11, btn_word12, btn_word13, btn_word14, btn_word21, btn_word22, btn_word23, btn_word24, btn_word31, btn_word32, btn_word33, btn_word34, btn_word41, btn_word42, btn_word43, btn_word44));
+        createButtons();
 
         lbl_remainingTries = new JLabel("Remaining Tries: " + remainingTries);
         lbl_remainingTries.setFont(new Font("Sanserif", Font.PLAIN, 14));
@@ -180,14 +82,13 @@ public class GamePanel extends JPanel implements ActionListener{
         btn_submit.setBorder(new RoundBorder(40));
         this.add(btn_submit);
 
-        btn_newGame = new JButton("New Game");
+        btn_newGame = new RoundedButtonUI("New Game");
+        btn_newGame.setForeground(Color.WHITE);
+        btn_newGame.setBackground(Color.BLACK);
         btn_newGame.setFont(new Font("Sanserif", Font.BOLD, 16));
         btn_newGame.setBounds(400, 560, 200, 40);
-        btn_newGame.setBackground(Color.WHITE);
-        btn_newGame.setBorder(new RoundBorder(40));
         this.add(btn_newGame);
 
-        btnList.addAll(Arrays.asList(btn_word11, btn_word12, btn_word13, btn_word14, btn_word21, btn_word22, btn_word23, btn_word24, btn_word31, btn_word32, btn_word33, btn_word34, btn_word41, btn_word42, btn_word43, btn_word44));
         assignWordToBtn(getWordsWithCategory.getAllWords());
 
         btn_word11.addActionListener(this);
@@ -209,6 +110,7 @@ public class GamePanel extends JPanel implements ActionListener{
         btn_shuffle.addActionListener(this);
         btn_deselect.addActionListener(this);
         btn_submit.addActionListener(this);
+        btn_newGame.addActionListener(this);
     }
 
     @Override
@@ -373,15 +275,72 @@ public class GamePanel extends JPanel implements ActionListener{
                 remainingTries = 0;
             }else if(!checkIfWordsAreInSameCategory()){
                 remainingTries--;
+                if(remainingTries == 0){
+                    lbl_info.setText("Game Over!");
+                    //TODO: add the correct category to the buttons
+                    unsetAllButtons();
+                    JOptionPane.showMessageDialog(this, "Game Over!");
+                }
+            }else if(correctBtns.size() == 16){
+                disableAllButtons();
+                EndScreenFrame endScreenFrame = new EndScreenFrame();
             }
             lbl_remainingTries.setText("Remaining Tries: " + remainingTries);
         }//end of if btn_submit
+
+        if(e.getSource() == btn_newGame){
+            //TODO: Implement the logic for the new game
+            System.out.println("New Game");
+        }//end of if btn_newGame
 
         if(buttonCounter > 4){
             buttonCounter = 4;
         }else if(buttonCounter < 0){
             buttonCounter = 0;
         }//end of if(buttonCounter)
+    }
+
+    public void instantiateButtons(){
+        btn_word11 = new JToggleButton();
+        btn_word12 = new JToggleButton();
+        btn_word13 = new JToggleButton();
+        btn_word14 = new JToggleButton();
+        btn_word21 = new JToggleButton();
+        btn_word22 = new JToggleButton();
+        btn_word23 = new JToggleButton();
+        btn_word24 = new JToggleButton();
+        btn_word31 = new JToggleButton();
+        btn_word32 = new JToggleButton();
+        btn_word33 = new JToggleButton();
+        btn_word34 = new JToggleButton();
+        btn_word41 = new JToggleButton();
+        btn_word42 = new JToggleButton();
+        btn_word43 = new JToggleButton();
+        btn_word44 = new JToggleButton();
+    }
+
+    public void createButtons(){
+        int tempCounter = 0;
+
+        for(int i = 0; i < btnList.size(); i++){
+            JToggleButton button = btnList.get(i);
+
+            button.setUI(new CustomToggleButtonUI(new Color(0x5a594e), new Color(0xefefe6)));
+            button.setFont(new Font("Sanserif", Font.BOLD, 20));
+            button.setBounds(buttonX, buttonY, buttonWidth, buttonHeight);
+            button.setBorder(new RoundBorder(16));
+            this.add(button);
+
+            tempCounter++;
+
+            buttonX += 160;
+
+            if(tempCounter > 3){
+                buttonX = 185;
+                buttonY += 90;
+                tempCounter = 0;
+            }
+        }
     }
 
     public void assignWordToBtn(ArrayList<Word> words){
@@ -453,13 +412,22 @@ public class GamePanel extends JPanel implements ActionListener{
                     return false;
                 }
             }
+
+            int tempCounterColor = 0;
+            int index = colors.size() - 1;
             for(JToggleButton button : btnList){
                 if(button.getText().equalsIgnoreCase(wordListToCheck.get(0).getValue()) || button.getText().equalsIgnoreCase(wordListToCheck.get(1).getValue()) || button.getText().equalsIgnoreCase(wordListToCheck.get(2).getValue()) || button.getText().equalsIgnoreCase(wordListToCheck.get(3).getValue())) {
-                    button.setUI(new CustomToggleButtonUI(new Color(0x5a594e), Color.GREEN));
+                    button.setUI(new CustomToggleButtonUI(new Color(0x5a594e), colors.get(index)));
                     correctBtns.add(button);
-                    //TODO: make different color for the buttons
                     button.setEnabled(false);
                     button.setSelected(false);
+
+                    tempCounterColor++;
+
+                    if(tempCounterColor == 4){
+                        colors.remove(index);
+                        tempCounterColor = 0;
+                    }
                 }
             }
             buttonCounter = 0;
@@ -496,6 +464,16 @@ public class GamePanel extends JPanel implements ActionListener{
         }
     }
 
+    public void disableAllButtons(){
+        for(JToggleButton button : btnList){
+            button.setEnabled(false);
+        }
+
+        btn_submit.setEnabled(false);
+        btn_deselect.setEnabled(false);
+        btn_shuffle.setEnabled(false);
+    }
+
     public boolean checkIfButtonsAreCorrect(JToggleButton button){
         for(JToggleButton btn : correctBtns){
             if(btn == button){
@@ -530,7 +508,9 @@ public class GamePanel extends JPanel implements ActionListener{
             insets.left = insets.top = insets.right = insets.bottom = this.radius;
             return insets;
         }
+
     }
+
 }
 
 
