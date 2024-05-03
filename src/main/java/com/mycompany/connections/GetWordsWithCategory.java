@@ -141,6 +141,10 @@ public class GetWordsWithCategory {
         return wordsOfFourthCategory;
     }
 
+    public ArrayList<Word> getAllWords() {
+        return allWords;
+    }
+
     public String getCategory1() {
         return category1;
     }

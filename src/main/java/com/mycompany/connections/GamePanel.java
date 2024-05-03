@@ -54,51 +54,52 @@ public class GamePanel extends JPanel implements ActionListener{
         btn_word12.setBorder(new RoundBorder(16));
         this.add(btn_word12);
 
-        btn_word13 = new JToggleButton(word13);
+        btn_word13 = new JToggleButton();
+        btn_word13.setUI(new CustomToggleButtonUI(new Color(0x5a594e), new Color(0xefefe6)));
         btn_word13.setFont(new Font("Sanserif", Font.BOLD, 20));
         btn_word13.setBounds(505, 70, 150, 80);
         btn_word13.setBorder(new RoundBorder(16));
         this.add(btn_word13);
 
-        btn_word14 = new JToggleButton(word14);
+        btn_word14 = new JToggleButton();
+        btn_word14.setUI(new CustomToggleButtonUI(new Color(0x5a594e), new Color(0xefefe6)));
         btn_word14.setFont(new Font("Sanserif", Font.BOLD, 20));
         btn_word14.setBounds(665, 70, 150, 80);
-        btn_word14.setBackground(new Color(0xefefe6));
         btn_word14.setBorder(new RoundBorder(16));
         this.add(btn_word14);
 
-        btn_word21 = new JToggleButton(word21);
+        btn_word21 = new JToggleButton();
+        btn_word21.setUI(new CustomToggleButtonUI(new Color(0x5a594e), new Color(0xefefe6)));
         btn_word21.setFont(new Font("Sanserif", Font.BOLD, 20));
         btn_word21.setBounds(185, 160, 150, 80);
-        btn_word21.setBackground(new Color(0xefefe6));
         btn_word21.setBorder(new RoundBorder(16));
         this.add(btn_word21);
 
-        btn_word22 = new JToggleButton(word22);
+        btn_word22 = new JToggleButton();
+        btn_word22.setUI(new CustomToggleButtonUI(new Color(0x5a594e), new Color(0xefefe6)));
         btn_word22.setFont(new Font("Sanserif", Font.BOLD, 20));
         btn_word22.setBounds(345, 160, 150, 80);
-        btn_word22.setBackground(new Color(0xefefe6));
         btn_word22.setBorder(new RoundBorder(16));
         this.add(btn_word22);
 
-        btn_word23 = new JToggleButton(word23);
+        btn_word23 = new JToggleButton();
+        btn_word23.setUI(new CustomToggleButtonUI(new Color(0x5a594e), new Color(0xefefe6)));
         btn_word23.setFont(new Font("Sanserif", Font.BOLD, 20));
         btn_word23.setBounds(505, 160, 150, 80);
-        btn_word23.setBackground(new Color(0xefefe6));
         btn_word23.setBorder(new RoundBorder(16));
         this.add(btn_word23);
 
-        btn_word24 = new JToggleButton(word24);
+        btn_word24 = new JToggleButton();
+        btn_word24.setUI(new CustomToggleButtonUI(new Color(0x5a594e), new Color(0xefefe6)));
         btn_word24.setFont(new Font("Sanserif", Font.BOLD, 20));
         btn_word24.setBounds(665, 160, 150, 80);
-        btn_word24.setBackground(new Color(0xefefe6));
         btn_word24.setBorder(new RoundBorder(16));
         this.add(btn_word24);
 
-        btn_word31 = new JToggleButton(word31);
+        btn_word31 = new JToggleButton();
+        btn_word31.setUI(new CustomToggleButtonUI(new Color(0x5a594e), new Color(0xefefe6)));
         btn_word31.setFont(new Font("Sanserif", Font.BOLD, 20));
         btn_word31.setBounds(185, 250, 150, 80);
-        btn_word31.setBackground(new Color(0xefefe6));
         btn_word31.setBorder(new RoundBorder(16));
         this.add(btn_word31);
 
