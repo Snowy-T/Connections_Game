@@ -5,16 +5,53 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 import java.awt.geom.RoundRectangle2D;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import javax.swing.border.AbstractBorder;
 
 public class EndScreenPanel extends JPanel{
 
     JLabel box1, box2, box3, box4, ggtext;
 
-    public EndScreenPanel(){
+    JLabel gamesplayed, gameswon;
+    ResultSet rs;
+    Statement statement;
+    PreparedStatement ps;
+    GamePanel gamePanel;
+
+    String username;
+    String text = "";
+
+    public EndScreenPanel(String username){
+
+        try {
+
+            statement = SingeltonConnection.getInstanz().getConnection().createStatement();
+
+        } catch (Exception e) {
+
+        }
 
         this.setLayout(null);
         this.setBackground(Color.WHITE);
+
+        this.username = username;
+        gamePanel = new GamePanel(username);
+
+        if(gamePanel.isWon()){
+            updatehighscore(username);
+        }
+        updategamesplayed(username);
+
+        gamesplayed = new JLabel("Games Played: " + getgamesplayed(username));
+        gamesplayed.setBounds(50, 50, 100, 40);
+        this.add(gamesplayed);
+
+        gameswon = new JLabel("Highscore: " + getgameswon(username));
+        gameswon.setBounds(190, 50, 100, 40);
+        this.add(gameswon);
 
         box1 = new JLabel();
         box1.setOpaque(true);
@@ -48,11 +85,89 @@ public class EndScreenPanel extends JPanel{
         box4.setForeground(new Color(0xf9df6d));
         this.add(box4);
 
-        ggtext = new JLabel("GG you won.");
+        if(gamePanel.isWon()) {
+            text = "GG you won.";
+        }else{
+            text = "GG you lost.";
+        }
+
+        ggtext = new JLabel(text);
         ggtext.setFont(new Font("Sanserif", 0, 24));
-        ggtext.setBounds(100, 20, 400, 80);
+        ggtext.setBounds(100, -10, 400, 80);
         this.add(ggtext);
 
+
+    }
+
+    public int getgamesplayed(String nickname){
+
+        int gamesplayed = 0;
+
+        try {
+
+            rs = statement.executeQuery("SELECT numberOfGamesPlayed FROM userdata WHERE username = '" + nickname + "'");
+
+            while(rs.next()){
+                gamesplayed = rs.getInt("numberOfGamesPlayed");
+            }
+
+        } catch (Exception e) {
+
+        }
+
+        return gamesplayed;
+
+    }
+
+    public void updatehighscore(String nickname){
+
+        String sql = "UPDATE userdata SET numberOfGamesWon = ? WHERE username = '" + nickname + "'";
+
+        try {
+
+            ps = SingeltonConnection.getInstanz().getConnection().prepareStatement(sql);
+            ps.setInt(1, getgameswon(nickname) + 1);
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+
+        }
+
+    }
+
+    public void updategamesplayed(String nickname){
+
+        String sql = "UPDATE userdata SET numberOfGamesPlayed = ? WHERE username = '" + nickname + "'";
+
+        try {
+
+            ps = SingeltonConnection.getInstanz().getConnection().prepareStatement(sql);
+            ps.setInt(1, getgamesplayed(nickname) + 1);
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+
+        }
+
+    }
+
+    public int getgameswon(String nickname){
+
+        int gameswon = 0;
+
+        try {
+
+            rs = statement.executeQuery("SELECT numberOfGamesWon FROM userdata WHERE username = '" + nickname + "'");
+
+            while(rs.next()){
+                gameswon = rs.getInt("numberOfGamesWon");
+            }
+
+        } catch (Exception e) {
+
+        }
+
+        return gameswon;
 
     }
 

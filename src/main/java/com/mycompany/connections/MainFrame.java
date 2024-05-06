@@ -20,6 +20,8 @@ public class MainFrame extends JFrame implements ActionListener{
     UserLogin userLogin;
     ImageIcon imageIcon;
 
+    String username;
+
     public MainFrame(){
         this.setTitle("Connections");
         this.setSize(1016, 700);
@@ -32,12 +34,7 @@ public class MainFrame extends JFrame implements ActionListener{
 
         loginPanel = new LoginPanel();
         loginPanel.setBounds(0, 0, 1016, 700);
-        //this.add(loginPanel);
-
-        gamePanel = new GamePanel();
-        gamePanel.setBounds(0, 0, 1016, 700);
-        this.add(gamePanel);
-        gamePanel.setVisible(true);
+        this.add(loginPanel);
 
         loginPanel.btn_login.addActionListener(this);
 
@@ -60,6 +57,13 @@ public class MainFrame extends JFrame implements ActionListener{
                 user = new User(username, pass);
                 userLogin = new UserLogin(user);
 
+                this.username = user.getNickname();
+
+                gamePanel = new GamePanel(username);
+                gamePanel.setBounds(0, 0, 1016, 700);
+                this.add(gamePanel);
+                gamePanel.setVisible(false);
+
                 if(userLogin.loginUser()){
                     System.out.println("Login successful!");
                     loginPanel.setVisible(false);
@@ -72,6 +76,14 @@ public class MainFrame extends JFrame implements ActionListener{
                 }
             }
         }
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
     
 }

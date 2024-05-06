@@ -82,5 +82,4 @@ public class LoginPanel extends JPanel implements ActionListener{
         }
 
     }
-    
 }

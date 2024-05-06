@@ -42,10 +42,14 @@ public class GamePanel extends JPanel implements ActionListener{
     int buttonY = 70;
     int buttonWidth = 150;
     int buttonHeight = 80;
+    String username;
+    boolean won = false;
 
-    public GamePanel(){
+    public GamePanel(String username){
         this.setLayout(null);
         this.setBackground(Color.WHITE);
+
+        this.username = username;
 
         lbl_info = new JLabel("Create four groups of four!");
         lbl_info.setFont(new Font("Sanserif", Font.PLAIN, 16));
@@ -277,11 +281,12 @@ public class GamePanel extends JPanel implements ActionListener{
                 if(remainingTries == 0){
                     lbl_info.setText("Game Over!");
                     unsetAllButtons();
-                    JOptionPane.showMessageDialog(this, "Game Over!");
+                    EndScreenFrame endScreenFrame = new EndScreenFrame(username);
                 }
             }else if(correctBtns.size() == 16){
+                won = true;
                 disableAllButtons();
-                EndScreenFrame endScreenFrame = new EndScreenFrame();
+                EndScreenFrame endScreenFrame = new EndScreenFrame(username);
             }
             lbl_remainingTries.setText("Remaining Tries: " + remainingTries);
         }//end of if btn_submit
@@ -400,8 +405,8 @@ public class GamePanel extends JPanel implements ActionListener{
                         wordListToCheck.add(word);
                     }
                 }
-            }
-        }
+            }//end of for loop
+        }//end of for loop
 
         if(wordListToCheck.size() == 4){
             String category = wordListToCheck.get(0).getCategory();
@@ -409,7 +414,7 @@ public class GamePanel extends JPanel implements ActionListener{
                 if(!category.equalsIgnoreCase(word.getCategory())){
                     return false;
                 }
-            }
+            }//end of for loop
 
             int tempCounterColor = 0;
             int index = colors.size() - 1;
@@ -419,6 +424,7 @@ public class GamePanel extends JPanel implements ActionListener{
                     correctBtns.add(button);
                     button.setEnabled(false);
                     button.setSelected(false);
+                    //moveButtons();
 
                     tempCounterColor++;
 
@@ -434,6 +440,32 @@ public class GamePanel extends JPanel implements ActionListener{
         }
         System.out.println("Words are not in the same category!");
         return false;
+    }
+
+    public void moveButtons(){
+
+        int tempBtnX = 185;
+        int tempBtnY = 70;
+        int tempCounter = 0;
+
+        for(JToggleButton button : correctBtns){
+            for(JToggleButton btn : btnList){
+
+                if(correctBtns.contains(btn)){
+                    btn.setBounds(buttonX, buttonY, buttonWidth, buttonHeight);
+                    button.setBounds(tempBtnX, tempBtnY, buttonWidth, buttonHeight);
+                }
+
+                tempBtnX += 160;
+                tempCounter++;
+
+                if(tempCounter > 3){
+                    tempBtnX = 185;
+                    tempBtnY += 90;
+                    tempCounter = 0;
+                }
+            }
+        }
     }
 
     public void lowerOrHigherBtnCounter(JToggleButton button){
@@ -479,6 +511,10 @@ public class GamePanel extends JPanel implements ActionListener{
             }
         }
         return false;
+    }
+
+    public boolean isWon() {
+        return won;
     }
 
     static class RoundBorder extends AbstractBorder {
