@@ -33,6 +33,7 @@ public class GamePanel extends JPanel implements ActionListener{
         add(new Color(0xa0c35a));
         add(new Color(0xf9df6d));
     }};
+    ArrayList<JToggleButton> orderedBtns = new ArrayList<JToggleButton>();
     GetWordsWithCategory getWordsWithCategory = new GetWordsWithCategory();
     Random random = new Random();
 
@@ -268,27 +269,39 @@ public class GamePanel extends JPanel implements ActionListener{
             shuffleWords();
         }//end of if btn_shuffle
 
-        if(e.getSource() == btn_deselect){
-            buttonCounter = 0;
-            unsetAllButtons();
-        }//end of if btn_deselect
+        if(!isAnyBtnSelected()){
+            btn_deselect.setEnabled(false);
+        }else {
+            btn_deselect.setEnabled(true);
+            if (e.getSource() == btn_deselect) {
+                buttonCounter = 0;
+                unsetAllButtons();
+            }//end of if btn_deselect
+        }
 
-        if(e.getSource() == btn_submit){
-            if(remainingTries <= 0){
-                remainingTries = 0;
-            }else if(!checkIfWordsAreInSameCategory()){
-                remainingTries--;
-                if(remainingTries == 0){
-                    lbl_info.setText("Game Over!");
-                    unsetAllButtons();
+        if(buttonCounter < 4){
+            btn_submit.setEnabled(false);
+        }else {
+            btn_submit.setEnabled(true);
+
+            if(e.getSource() == btn_submit) {
+
+                if (remainingTries <= 0) {
+                    remainingTries = 0;
+                } else if (!checkIfWordsAreInSameCategory()) {
+                    remainingTries--;
+                    if (remainingTries == 0) {
+                        lbl_info.setText("Game Over!");
+                        unsetAllButtons();
+                        EndScreenFrame endScreenFrame = new EndScreenFrame(username);
+                    }
+                } else if (correctBtns.size() == 16) {
+                    won = true;
+                    disableAllButtons();
                     EndScreenFrame endScreenFrame = new EndScreenFrame(username);
                 }
-            }else if(correctBtns.size() == 16){
-                won = true;
-                disableAllButtons();
-                EndScreenFrame endScreenFrame = new EndScreenFrame(username);
+                lbl_remainingTries.setText("Remaining Tries: " + remainingTries);
             }
-            lbl_remainingTries.setText("Remaining Tries: " + remainingTries);
         }//end of if btn_submit
 
         if(e.getSource() == btn_newGame){
@@ -301,7 +314,7 @@ public class GamePanel extends JPanel implements ActionListener{
         }else if(buttonCounter < 0){
             buttonCounter = 0;
         }//end of if(buttonCounter)
-    }
+    }//end of actionPerformed
 
     public void instantiateButtons(){
         btn_word11 = new JToggleButton();
@@ -320,7 +333,7 @@ public class GamePanel extends JPanel implements ActionListener{
         btn_word42 = new JToggleButton();
         btn_word43 = new JToggleButton();
         btn_word44 = new JToggleButton();
-    }
+    }//end of instantiateButtons
 
     public void createButtons(){
         int tempCounter = 0;
@@ -344,7 +357,7 @@ public class GamePanel extends JPanel implements ActionListener{
                 tempCounter = 0;
             }
         }
-    }
+    }//end of createButtons
 
     public void assignWordToBtn(ArrayList<Word> words){
         ArrayList<String> listOfWords = new ArrayList<String>();
@@ -392,7 +405,7 @@ public class GamePanel extends JPanel implements ActionListener{
                 listOfWords.remove(randomIndex);
             }
         }
-    }
+    }//end of shuffleWords
 
     public boolean checkIfWordsAreInSameCategory(){
         ArrayList<Word> words = getWordsWithCategory.getAllWords();
@@ -416,22 +429,20 @@ public class GamePanel extends JPanel implements ActionListener{
                 }
             }//end of for loop
 
-            int tempCounterColor = 0;
-            int index = colors.size() - 1;
             for(JToggleButton button : btnList){
+
                 if(button.getText().equalsIgnoreCase(wordListToCheck.get(0).getValue()) || button.getText().equalsIgnoreCase(wordListToCheck.get(1).getValue()) || button.getText().equalsIgnoreCase(wordListToCheck.get(2).getValue()) || button.getText().equalsIgnoreCase(wordListToCheck.get(3).getValue())) {
-                    button.setUI(new CustomToggleButtonUI(new Color(0x5a594e), colors.get(index)));
-                    correctBtns.add(button);
-                    button.setEnabled(false);
                     button.setSelected(false);
-                    //moveButtons();
+                    button.setEnabled(false);
 
-                    tempCounterColor++;
-
-                    if(tempCounterColor == 4){
-                        colors.remove(index);
-                        tempCounterColor = 0;
+                    if(!ifCorrectListHasDuplicates(button)){
+                        correctBtns.add(button);
                     }
+
+                    moveBtns();
+                    colourTheCorrectBtns();
+
+                    buttonCounter = 0;
                 }
             }
             buttonCounter = 0;
@@ -440,33 +451,116 @@ public class GamePanel extends JPanel implements ActionListener{
         }
         System.out.println("Words are not in the same category!");
         return false;
-    }
+    }//end of checkIfWordsAreInSameCategory
 
-    public void moveButtons(){
-
-        int tempBtnX = 185;
-        int tempBtnY = 70;
-        int tempCounter = 0;
-
+    public boolean ifCorrectListHasDuplicates(JToggleButton btn){
         for(JToggleButton button : correctBtns){
-            for(JToggleButton btn : btnList){
+            if(button == btn){
+                return true;
+            }
+        }
+        return false;
+    }//end of ifCorrectListHasDuplicates
 
-                if(correctBtns.contains(btn)){
-                    btn.setBounds(buttonX, buttonY, buttonWidth, buttonHeight);
-                    button.setBounds(tempBtnX, tempBtnY, buttonWidth, buttonHeight);
-                }
+    public void moveBtns(){
+        int xpos = 0;
+        int ypos = 0;
+        int indexBtnList = 0;
+        int indexCorrectBtnList = 0;
 
-                tempBtnX += 160;
-                tempCounter++;
+        for(int i = 0; i < btnList.size(); i++){
+            JToggleButton button = btnList.get(i);
+            for(JToggleButton correctButton : correctBtns){
+                if(!checkIfButtonsAreCorrect(button) && !isBtnOrdered(correctButton)){
+                    xpos = button.getX();
+                    ypos = button.getY();
 
-                if(tempCounter > 3){
-                    tempBtnX = 185;
-                    tempBtnY += 90;
-                    tempCounter = 0;
+                    button.setBounds(correctButton.getX(), correctButton.getY(), buttonWidth, buttonHeight);
+                    correctButton.setBounds(xpos, ypos, buttonWidth, buttonHeight);
+
+                    orderedBtns.add(correctButton);
+
+                    System.out.printf("Ordered Button size:" + orderedBtns.size() + "\n");
+                    System.out.println("Correct Button size:" + correctBtns.size() + "\n");
+                    for(JToggleButton btn : correctBtns){
+                        //System.out.println("Correct Button: " + btn.getText());
+                    }
+
+                    indexBtnList = btnList.indexOf(button);
+                    indexCorrectBtnList = btnList.indexOf(correctButton);
+                    btnList.set(indexBtnList, correctButton);
+                    btnList.set(indexCorrectBtnList, button);
+                    i = btnList.size();
                 }
             }
         }
-    }
+    }//end of moveBtns
+
+    public boolean isBtnOrdered(JToggleButton button){
+        for(JToggleButton btn : orderedBtns){
+            if(button == btn){
+                return true;
+            }
+        }
+        return false;
+    }//end of isBtnOrdered
+
+    public void colourTheCorrectBtns(){
+        int sizeOforderedBtn = orderedBtns.size();
+        int index = colors.size()-1;
+        boolean updateIOnces = false;
+
+        for(int i = 0; i < orderedBtns.size(); i++){
+
+            JToggleButton button = orderedBtns.get(i);
+
+            if(sizeOforderedBtn <= 4 ){
+                button.setUI(new CustomToggleButtonUI(new Color(0x5a594e), colors.get(index)));
+
+            } else if (sizeOforderedBtn > 4 && sizeOforderedBtn <= 8){
+
+                if(!updateIOnces) {
+                    i = 4;
+                    updateIOnces = true;
+                }
+                button = orderedBtns.get(i);
+                if(colors.size() >= 4){
+                    colors.remove(index);
+                }
+                index = colors.size()-1;
+                button.setUI(new CustomToggleButtonUI(new Color(0x5a594e), colors.get(index)));
+                sizeOforderedBtn = orderedBtns.size();
+
+            } else if (sizeOforderedBtn > 8 && sizeOforderedBtn <= 12){
+
+                if(!updateIOnces) {
+                    i = 8;
+                    updateIOnces = true;
+                }
+                button = orderedBtns.get(i);
+                if(colors.size() >= 3){
+                    colors.remove(index);
+                }
+                index = colors.size()-1;
+                button.setUI(new CustomToggleButtonUI(new Color(0x5a594e), colors.get(index)));
+                sizeOforderedBtn = orderedBtns.size();
+
+            } else if (sizeOforderedBtn > 12){
+
+                if(!updateIOnces) {
+                    i = 12;
+                    updateIOnces = true;
+                }
+                button = orderedBtns.get(i);
+                if(colors.size() >= 2){
+                    colors.remove(index);
+                }
+                index = colors.size()-1;
+                button.setUI(new CustomToggleButtonUI(new Color(0x5a594e), colors.get(index)));
+                sizeOforderedBtn = orderedBtns.size();
+            }
+        }
+    }//end of colourTheCorrectBtns
 
     public void lowerOrHigherBtnCounter(JToggleButton button){
         if(button.isSelected()){
@@ -475,7 +569,7 @@ public class GamePanel extends JPanel implements ActionListener{
             buttonCounter--;
             makeUnSelectedBtnsSelectable();
         }
-    }
+    }//end of lowerOrHigherBtnCounter
 
     public void makeUnSelectedBtnsSelectable(){
         for(JToggleButton button : btnList){
@@ -483,7 +577,7 @@ public class GamePanel extends JPanel implements ActionListener{
                 button.setEnabled(true);
             }
         }
-    }
+    }//end of makeUnSelectedBtnsSelectable
 
     public void unsetAllButtons(){
         for(JToggleButton button : btnList){
@@ -492,7 +586,7 @@ public class GamePanel extends JPanel implements ActionListener{
                 button.setEnabled(true);
             }
         }
-    }
+    }//end of unsetAllButtons
 
     public void disableAllButtons(){
         for(JToggleButton button : btnList){
@@ -502,7 +596,7 @@ public class GamePanel extends JPanel implements ActionListener{
         btn_submit.setEnabled(false);
         btn_deselect.setEnabled(false);
         btn_shuffle.setEnabled(false);
-    }
+    }//end of disableAllButtons
 
     public boolean checkIfButtonsAreCorrect(JToggleButton button){
         for(JToggleButton btn : correctBtns){
@@ -511,7 +605,16 @@ public class GamePanel extends JPanel implements ActionListener{
             }
         }
         return false;
-    }
+    }//end of checkIfButtonsAreCorrect
+
+    public boolean isAnyBtnSelected(){
+        for(JToggleButton button : btnList){
+            if(button.isSelected()){
+                return true;
+            }
+        }
+        return false;
+    }//end of isAnyBtnSelected
 
     public boolean isWon() {
         return won;
