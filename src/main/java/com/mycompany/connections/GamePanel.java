@@ -291,13 +291,13 @@ public class GamePanel extends JPanel implements ActionListener{
                 } else if (!checkIfWordsAreInSameCategory()) {
                     remainingTries--;
                     if (remainingTries == 0) {
-                        lbl_info.setText("Game Over!");
                         unsetAllButtons();
                         EndScreenFrame endScreenFrame = new EndScreenFrame(username);
                     }
                 } else if (correctBtns.size() == 16) {
                     won = true;
                     disableAllButtons();
+                    System.out.println("You won!");
                     EndScreenFrame endScreenFrame = new EndScreenFrame(username);
                 }
                 lbl_remainingTries.setText("Remaining Tries: " + remainingTries);
@@ -338,8 +338,7 @@ public class GamePanel extends JPanel implements ActionListener{
     public void createButtons(){
         int tempCounter = 0;
 
-        for(int i = 0; i < btnList.size(); i++){
-            JToggleButton button = btnList.get(i);
+        for(JToggleButton button : btnList){
 
             button.setUI(new CustomToggleButtonUI(new Color(0x5a594e), new Color(0xefefe6)));
             button.setFont(new Font("Sanserif", Font.BOLD, 20));
@@ -411,6 +410,7 @@ public class GamePanel extends JPanel implements ActionListener{
     public boolean checkIfWordsAreInSameCategory(){
         ArrayList<Word> words = getWordsWithCategory.getAllWords();
         ArrayList<Word> wordListToCheck = new ArrayList<Word>();
+        ArrayList<JToggleButton> slctdBtns = new ArrayList<JToggleButton>();
         int counterOfMatches = 0;
 
         //if button is selected, check which word is selected and add it to the wordListToCheck
@@ -419,6 +419,9 @@ public class GamePanel extends JPanel implements ActionListener{
                 if(button.isSelected()){
                     if(button.getText().equalsIgnoreCase(word.getValue())){
                         wordListToCheck.add(word);
+                    }
+                    if(!ifSelectedListHasDuplicates(button, slctdBtns)){
+                        slctdBtns.add(button);
                     }
                 }
             }//end of for loop
@@ -433,30 +436,28 @@ public class GamePanel extends JPanel implements ActionListener{
                 if (category.equalsIgnoreCase(categoryToCheck)) {
                     counterOfMatches++;
                 }
-            }
+            }//end of for loop
 
             if (counterOfMatches == 4) {
 
-                for (JToggleButton button : btnList) {
-                    String buttonTxt = button.getText().trim();
-                    String word1 = wordListToCheck.get(0).getValue();
-                    String word2 = wordListToCheck.get(1).getValue();
-                    String word3 = wordListToCheck.get(2).getValue();
-                    String word4 = wordListToCheck.get(3).getValue();
+                for (JToggleButton button : slctdBtns) {
 
-                    if (buttonTxt.equalsIgnoreCase(word1) || buttonTxt.equalsIgnoreCase(word2) || buttonTxt.equalsIgnoreCase(word3) || buttonTxt.equalsIgnoreCase(word4)){
-                        button.setSelected(false);
-                        button.setEnabled(false);
+                    button.setSelected(false);
+                    button.setEnabled(false);
 
-                        if (!ifCorrectListHasDuplicates(button)) {
-                            correctBtns.add(button);
-                        }
+                    System.out.println("About to add button to correctBtns: " + button.getText());
 
-                        moveBtns();
-                        colourTheCorrectBtns();
-
-                        buttonCounter = 0;
+                    if(!ifCorrectListHasDuplicates(button)){
+                        correctBtns.add(button);
                     }
+
+                    System.out.println("Button added to correctBtns: " + button.getText());
+
+                    moveBtns();
+                    colourTheCorrectBtns();
+
+                    buttonCounter = 0;
+
                 }
                 buttonCounter = 0;
                 System.out.println("All words are in the same category!");
@@ -466,6 +467,15 @@ public class GamePanel extends JPanel implements ActionListener{
         System.out.println("Words are not in the same category!");
         return false;
     }//end of checkIfWordsAreInSameCategory
+
+    public boolean ifSelectedListHasDuplicates(JToggleButton btn, ArrayList<JToggleButton> selectedBtns){
+        for(JToggleButton button : selectedBtns){
+            if(button == btn){
+                return true;
+            }
+        }
+        return false;
+    }//end of ifCorrectListHasDuplicates
 
     public boolean ifCorrectListHasDuplicates(JToggleButton btn){
         for(JToggleButton button : correctBtns){
@@ -484,6 +494,7 @@ public class GamePanel extends JPanel implements ActionListener{
 
         for(int i = 0; i < btnList.size(); i++){
             JToggleButton button = btnList.get(i);
+
             for(JToggleButton correctButton : correctBtns){
                 if(!checkIfButtonsAreCorrect(button) && !isBtnOrdered(correctButton)){
                     xpos = button.getX();
@@ -494,18 +505,16 @@ public class GamePanel extends JPanel implements ActionListener{
 
                     orderedBtns.add(correctButton);
 
-                    //System.out.printf("Ordered Button size:" + orderedBtns.size() + "\n");
-                    //System.out.println("Correct Button size:" + correctBtns.size() + "\n");
-                    for(JToggleButton btn : correctBtns){
-                        //System.out.println("Correct Button: " + btn.getText());
-                    }
-
                     indexBtnList = btnList.indexOf(button);
                     indexCorrectBtnList = btnList.indexOf(correctButton);
                     btnList.set(indexBtnList, correctButton);
                     btnList.set(indexCorrectBtnList, button);
                     i = btnList.size();
                 }
+            }
+
+            if(!isBtnOrdered(button) && orderedBtns.size() == 15){ //last button wont get added so doing it manually
+                orderedBtns.add(button);
             }
         }
     }//end of moveBtns
@@ -519,6 +528,7 @@ public class GamePanel extends JPanel implements ActionListener{
         return false;
     }//end of isBtnOrdered
 
+    //TODO: mehr objektorientiert machen
     public void colourTheCorrectBtns(){
         int sizeOforderedBtn = orderedBtns.size();
         int index = colors.size()-1;
