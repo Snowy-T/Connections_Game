@@ -407,10 +407,13 @@ public class GamePanel extends JPanel implements ActionListener{
         }
     }//end of shuffleWords
 
+    //TODO: mehr objektorientiert machen
     public boolean checkIfWordsAreInSameCategory(){
         ArrayList<Word> words = getWordsWithCategory.getAllWords();
         ArrayList<Word> wordListToCheck = new ArrayList<Word>();
+        int counterOfMatches = 0;
 
+        //if button is selected, check which word is selected and add it to the wordListToCheck
         for(JToggleButton button : btnList){
             for(Word word : words){
                 if(button.isSelected()){
@@ -421,33 +424,44 @@ public class GamePanel extends JPanel implements ActionListener{
             }//end of for loop
         }//end of for loop
 
-        if(wordListToCheck.size() == 4){
-            String category = wordListToCheck.get(0).getCategory();
-            for(Word word : wordListToCheck){
-                if(!category.equalsIgnoreCase(word.getCategory())){
-                    return false;
-                }
-            }//end of for loop
+        if(wordListToCheck.size() == 4) {
 
-            for(JToggleButton button : btnList){
+            for (Word word : wordListToCheck) {
+                String category = word.getCategory();
+                String categoryToCheck = wordListToCheck.get(0).getCategory();
 
-                if(button.getText().equalsIgnoreCase(wordListToCheck.get(0).getValue()) || button.getText().equalsIgnoreCase(wordListToCheck.get(1).getValue()) || button.getText().equalsIgnoreCase(wordListToCheck.get(2).getValue()) || button.getText().equalsIgnoreCase(wordListToCheck.get(3).getValue())) {
-                    button.setSelected(false);
-                    button.setEnabled(false);
-
-                    if(!ifCorrectListHasDuplicates(button)){
-                        correctBtns.add(button);
-                    }
-
-                    moveBtns();
-                    colourTheCorrectBtns();
-
-                    buttonCounter = 0;
+                if (category.equalsIgnoreCase(categoryToCheck)) {
+                    counterOfMatches++;
                 }
             }
-            buttonCounter = 0;
-            System.out.println("All words are in the same category!");
-            return true;
+
+            if (counterOfMatches == 4) {
+
+                for (JToggleButton button : btnList) {
+                    String buttonTxt = button.getText().trim();
+                    String word1 = wordListToCheck.get(0).getValue();
+                    String word2 = wordListToCheck.get(1).getValue();
+                    String word3 = wordListToCheck.get(2).getValue();
+                    String word4 = wordListToCheck.get(3).getValue();
+
+                    if (buttonTxt.equalsIgnoreCase(word1) || buttonTxt.equalsIgnoreCase(word2) || buttonTxt.equalsIgnoreCase(word3) || buttonTxt.equalsIgnoreCase(word4)){
+                        button.setSelected(false);
+                        button.setEnabled(false);
+
+                        if (!ifCorrectListHasDuplicates(button)) {
+                            correctBtns.add(button);
+                        }
+
+                        moveBtns();
+                        colourTheCorrectBtns();
+
+                        buttonCounter = 0;
+                    }
+                }
+                buttonCounter = 0;
+                System.out.println("All words are in the same category!");
+                return true;
+            }
         }
         System.out.println("Words are not in the same category!");
         return false;
@@ -480,8 +494,8 @@ public class GamePanel extends JPanel implements ActionListener{
 
                     orderedBtns.add(correctButton);
 
-                    System.out.printf("Ordered Button size:" + orderedBtns.size() + "\n");
-                    System.out.println("Correct Button size:" + correctBtns.size() + "\n");
+                    //System.out.printf("Ordered Button size:" + orderedBtns.size() + "\n");
+                    //System.out.println("Correct Button size:" + correctBtns.size() + "\n");
                     for(JToggleButton btn : correctBtns){
                         //System.out.println("Correct Button: " + btn.getText());
                     }
