@@ -85,6 +85,8 @@ public class EndScreenPanel extends JPanel{
         box4.setForeground(new Color(0xf9df6d));
         this.add(box4);
 
+        System.out.println("isWon: " + gamePanel.isWon());
+
         if(gamePanel.isWon()) { //TODO: it doesnt work
             text = "GG you won.";
         }else{

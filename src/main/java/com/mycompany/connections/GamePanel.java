@@ -445,13 +445,9 @@ public class GamePanel extends JPanel implements ActionListener{
                     button.setSelected(false);
                     button.setEnabled(false);
 
-                    System.out.println("About to add button to correctBtns: " + button.getText());
-
                     if(!ifCorrectListHasDuplicates(button)){
                         correctBtns.add(button);
                     }
-
-                    System.out.println("Button added to correctBtns: " + button.getText());
 
                     moveBtns();
                     colourTheCorrectBtns();
