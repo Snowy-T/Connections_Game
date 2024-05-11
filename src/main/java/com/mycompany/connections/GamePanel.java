@@ -292,13 +292,14 @@ public class GamePanel extends JPanel implements ActionListener{
                     remainingTries--;
                     if (remainingTries == 0) {
                         unsetAllButtons();
-                        EndScreenFrame endScreenFrame = new EndScreenFrame(username);
+                        EndScreenFrame endScreenFrame = new EndScreenFrame(username, won);
                     }
                 } else if (correctBtns.size() == 16) {
-                    won = true;
+                    this.won = true;
                     disableAllButtons();
                     System.out.println("You won!");
-                    EndScreenFrame endScreenFrame = new EndScreenFrame(username);
+                    System.out.println("isWon: " + won);
+                    EndScreenFrame endScreenFrame = new EndScreenFrame(username, won);
                 }
                 lbl_remainingTries.setText("Remaining Tries: " + remainingTries);
             }
@@ -406,7 +407,6 @@ public class GamePanel extends JPanel implements ActionListener{
         }
     }//end of shuffleWords
 
-    //TODO: mehr objektorientiert machen
     public boolean checkIfWordsAreInSameCategory(){
         ArrayList<Word> words = getWordsWithCategory.getAllWords();
         ArrayList<Word> wordListToCheck = new ArrayList<Word>();
@@ -509,7 +509,7 @@ public class GamePanel extends JPanel implements ActionListener{
                 }
             }
 
-            if(!isBtnOrdered(button) && orderedBtns.size() == 15){ //last button wont get added so doing it manually
+            if(!isBtnOrdered(button) && orderedBtns.size() == btnList.size()-1){ //last button wont get added so doing it manually
                 orderedBtns.add(button);
             }
         }
@@ -524,7 +524,6 @@ public class GamePanel extends JPanel implements ActionListener{
         return false;
     }//end of isBtnOrdered
 
-    //TODO: mehr objektorientiert machen
     public void colourTheCorrectBtns(){
         int sizeOforderedBtn = orderedBtns.size();
         int index = colors.size()-1;
@@ -543,12 +542,7 @@ public class GamePanel extends JPanel implements ActionListener{
                     i = 4;
                     updateIOnces = true;
                 }
-                button = orderedBtns.get(i);
-                if(colors.size() >= 4){
-                    colors.remove(index);
-                }
-                index = colors.size()-1;
-                button.setUI(new CustomToggleButtonUI(new Color(0x5a594e), colors.get(index)));
+                methodForColourTheCorrectBtns(button, index, i, 4);
                 sizeOforderedBtn = orderedBtns.size();
 
             } else if (sizeOforderedBtn > 8 && sizeOforderedBtn <= 12){
@@ -557,12 +551,7 @@ public class GamePanel extends JPanel implements ActionListener{
                     i = 8;
                     updateIOnces = true;
                 }
-                button = orderedBtns.get(i);
-                if(colors.size() >= 3){
-                    colors.remove(index);
-                }
-                index = colors.size()-1;
-                button.setUI(new CustomToggleButtonUI(new Color(0x5a594e), colors.get(index)));
+                methodForColourTheCorrectBtns(button, index, i, 3);
                 sizeOforderedBtn = orderedBtns.size();
 
             } else if (sizeOforderedBtn > 12){
@@ -571,16 +560,21 @@ public class GamePanel extends JPanel implements ActionListener{
                     i = 12;
                     updateIOnces = true;
                 }
-                button = orderedBtns.get(i);
-                if(colors.size() >= 2){
-                    colors.remove(index);
-                }
-                index = colors.size()-1;
-                button.setUI(new CustomToggleButtonUI(new Color(0x5a594e), colors.get(index)));
+
+                methodForColourTheCorrectBtns(button, index, i, 2);
                 sizeOforderedBtn = orderedBtns.size();
             }
         }
     }//end of colourTheCorrectBtns
+
+    public void methodForColourTheCorrectBtns(JToggleButton button, int index, int i, int colourIndex){
+        button = orderedBtns.get(i);
+        if(colors.size() >= colourIndex){
+            colors.remove(index);
+        }
+        index = colors.size()-1;
+        button.setUI(new CustomToggleButtonUI(new Color(0x5a594e), colors.get(index)));
+    }//end of methodForColourTheCorrectBtns
 
     public void lowerOrHigherBtnCounter(JToggleButton button){
         if(button.isSelected()){
@@ -638,6 +632,14 @@ public class GamePanel extends JPanel implements ActionListener{
 
     public boolean isWon() {
         return won;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     static class RoundBorder extends AbstractBorder {

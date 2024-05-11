@@ -23,8 +23,10 @@ public class EndScreenPanel extends JPanel{
 
     String username;
     String text = "";
+    boolean isWon;
 
-    public EndScreenPanel(String username){
+    public EndScreenPanel(String username, boolean isWon){
+        this.isWon = isWon;
 
         try {
 
@@ -40,7 +42,7 @@ public class EndScreenPanel extends JPanel{
         this.username = username;
         gamePanel = new GamePanel(username);
 
-        if(gamePanel.isWon()){
+        if(isWon){
             updatehighscore(username);
         }
         updategamesplayed(username);
@@ -85,9 +87,7 @@ public class EndScreenPanel extends JPanel{
         box4.setForeground(new Color(0xf9df6d));
         this.add(box4);
 
-        System.out.println("isWon: " + gamePanel.isWon());
-
-        if(gamePanel.isWon()) { //TODO: it doesnt work
+        if(isWon) {
             text = "GG you won.";
         }else{
             text = "GG you lost.";

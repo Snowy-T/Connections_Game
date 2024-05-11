@@ -64,6 +64,8 @@ public class MainFrame extends JFrame implements ActionListener{
 
                 this.username = user.getNickname();
 
+                gamePanel.setUsername(username);
+
                 gamePanel.setVisible(false);
 
                 if(userLogin.loginUser()){
