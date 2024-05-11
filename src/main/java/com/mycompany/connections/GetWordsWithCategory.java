@@ -125,39 +125,7 @@ public class GetWordsWithCategory {
         return category;
     }
 
-    public ArrayList<Word> getWordsOfFirstCategory() {
-        return wordsOfFirstCategory;
-    }
-
-    public ArrayList<Word> getWordsOfSecondCategory() {
-        return wordsOfSecondCategory;
-    }
-
-    public ArrayList<Word> getWordsOfThirdCategory() {
-        return wordsOfThirdCategory;
-    }
-
-    public ArrayList<Word> getWordsOfFourthCategory() {
-        return wordsOfFourthCategory;
-    }
-
     public ArrayList<Word> getAllWords() {
         return allWords;
-    }
-
-    public String getCategory1() {
-        return category1;
-    }
-
-    public String getCategory2() {
-        return category2;
-    }
-
-    public String getCategory3() {
-        return category3;
-    }
-
-    public String getCategory4() {
-        return category4;
     }
 }

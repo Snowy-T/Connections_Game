@@ -306,8 +306,31 @@ public class GamePanel extends JPanel implements ActionListener{
         }//end of if btn_submit
 
         if(e.getSource() == btn_newGame){
-            //TODO: Implement the logic for the new game
             System.out.println("New Game");
+
+            correctBtns.clear();
+            orderedBtns.clear();
+            colors.clear();
+            getWordsWithCategory.getAllWords().clear();
+
+            for(JToggleButton button : btnList){
+                button.setUI(new CustomToggleButtonUI(new Color(0x5a594e), new Color(0xefefe6)));
+            }
+
+            getWordsWithCategory = new GetWordsWithCategory();
+
+            remainingTries = 4;
+            lbl_remainingTries.setText("Remaining Tries: " + remainingTries);
+            buttonCounter = 0;
+            won = false;
+            colors.add(new Color(0xba81c5));
+            colors.add(new Color(0xb0c4ef));
+            colors.add(new Color(0xa0c35a));
+            colors.add(new Color(0xf9df6d));
+
+            assignWordToBtn(getWordsWithCategory.getAllWords());
+            unsetAllButtons();
+            btn_shuffle.setEnabled(true);
         }//end of if btn_newGame
 
         if(buttonCounter > 4){
@@ -568,6 +591,7 @@ public class GamePanel extends JPanel implements ActionListener{
     }//end of colourTheCorrectBtns
 
     public void methodForColourTheCorrectBtns(JToggleButton button, int index, int i, int colourIndex){
+
         button = orderedBtns.get(i);
         if(colors.size() >= colourIndex){
             colors.remove(index);
