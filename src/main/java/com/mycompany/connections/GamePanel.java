@@ -292,14 +292,13 @@ public class GamePanel extends JPanel implements ActionListener{
                     remainingTries--;
                     if (remainingTries == 0) {
                         unsetAllButtons();
-                        EndScreenFrame endScreenFrame = new EndScreenFrame(username, won);
+                        EndScreenFrame endScreenFrame = new EndScreenFrame(username, won, orderedBtns, getWordsWithCategory.getAllWords());
                     }
                 } else if (correctBtns.size() == 16) {
                     this.won = true;
                     disableAllButtons();
                     System.out.println("You won!");
-                    System.out.println("isWon: " + won);
-                    EndScreenFrame endScreenFrame = new EndScreenFrame(username, won);
+                    EndScreenFrame endScreenFrame = new EndScreenFrame(username, won, orderedBtns, getWordsWithCategory.getAllWords());
                 }
                 lbl_remainingTries.setText("Remaining Tries: " + remainingTries);
             }
@@ -664,6 +663,10 @@ public class GamePanel extends JPanel implements ActionListener{
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public ArrayList<JToggleButton> getOrderedBtns() {
+        return orderedBtns;
     }
 
     static class RoundBorder extends AbstractBorder {
