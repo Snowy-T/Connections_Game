@@ -412,10 +412,16 @@ public class GamePanel extends JPanel implements ActionListener{
 
     public void shuffleWords(){
         ArrayList<String> listOfWords = new ArrayList<String>();
+        ArrayList<String> sltBtnWords = new ArrayList<>();
 
         for(JToggleButton button : btnList){
             if(!checkIfButtonsAreCorrect(button)){
                 listOfWords.add(button.getText());
+
+                if(button.isSelected()){
+                   sltBtnWords.add(button.getText().trim());
+                   button.setSelected(false);
+                }
             }
         }
 
@@ -427,6 +433,16 @@ public class GamePanel extends JPanel implements ActionListener{
                 listOfWords.remove(randomIndex);
             }
         }
+
+        for(JToggleButton button : btnList){
+            String btnlbl = button.getText().trim();
+            for(String str : sltBtnWords){
+                if(str.equalsIgnoreCase(btnlbl)){
+                    button.setSelected(true);
+                }
+            }
+        }//end of for-loop
+
     }//end of shuffleWords
 
     public boolean checkIfWordsAreInSameCategory(){
@@ -474,10 +490,9 @@ public class GamePanel extends JPanel implements ActionListener{
                     moveBtns();
                     colourTheCorrectBtns();
 
-                    buttonCounter = 0;
-
                 }
                 buttonCounter = 0;
+                unsetAllButtons();
                 System.out.println("All words are in the same category!");
                 return true;
             }
@@ -652,6 +667,8 @@ public class GamePanel extends JPanel implements ActionListener{
         }
         return false;
     }//end of isAnyBtnSelected
+
+
 
     public boolean isWon() {
         return won;

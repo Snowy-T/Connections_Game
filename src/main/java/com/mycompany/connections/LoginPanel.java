@@ -7,13 +7,15 @@ package com.mycompany.connections;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import javax.swing.*;
 
 /**
  *
  * @author Waleed Muhammad
  */
-public class LoginPanel extends JPanel implements ActionListener{
+public class LoginPanel extends JPanel implements ActionListener {
 
     JLabel lbl_username, lbl_password;
     JTextField txt_username;
@@ -21,7 +23,6 @@ public class LoginPanel extends JPanel implements ActionListener{
     JButton btn_register,btn_login;
     UserRegister userRegister;
     User user;
-    UserLogin userLogin;
 
     public LoginPanel(){
         this.setLayout(null);

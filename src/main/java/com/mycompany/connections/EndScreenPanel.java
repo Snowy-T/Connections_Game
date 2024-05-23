@@ -68,7 +68,7 @@ public class EndScreenPanel extends JPanel{
         box1.setOpaque(true);
         box1.setBounds(50, 90, 230, 50);
         box1.setBorder(new RoundBorder(16));
-        box1.setBackground(new Color(0xba81c5));
+        box1.setBackground(new Color(0xf9df6d));
         box1.setForeground(Color.BLACK);
         this.add(box1);
 
@@ -76,7 +76,7 @@ public class EndScreenPanel extends JPanel{
         box2.setOpaque(true);
         box2.setBounds(50, 150, 230, 50);
         box2.setBorder(new RoundBorder(16));
-        box2.setBackground(new Color(0xb0c4ef));
+        box2.setBackground(new Color(0xa0c35a));
         box2.setForeground(Color.BLACK);
         this.add(box2);
 
@@ -84,7 +84,7 @@ public class EndScreenPanel extends JPanel{
         box3.setOpaque(true);
         box3.setBounds(50, 210, 230, 50);
         box3.setBorder(new RoundBorder(16));
-        box3.setBackground(new Color(0xa0c35a));
+        box3.setBackground(new Color(0xb0c4ef));
         box3.setForeground(Color.BLACK);
         this.add(box3);
 
@@ -92,7 +92,7 @@ public class EndScreenPanel extends JPanel{
         box4.setOpaque(true);
         box4.setBounds(50, 270, 230, 50);
         box4.setBorder(new RoundBorder(16));
-        box4.setBackground(new Color(0xf9df6d));
+        box4.setBackground(new Color(0xba81c5));
         box4.setForeground(Color.BLACK);
         this.add(box4);
 
