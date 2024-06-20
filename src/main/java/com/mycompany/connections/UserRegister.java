@@ -1,11 +1,12 @@
 package com.mycompany.connections;
 
+import java.sql.PreparedStatement;
 import java.sql.Statement;
 
 public class UserRegister {
 
     private User user;
-    Statement statement;
+    PreparedStatement preparedStatement;
 
     public UserRegister(User user) {
         this.user = user;
@@ -14,8 +15,14 @@ public class UserRegister {
 
     public void registerUser() {
         try {
-            statement = SingeltonConnection.getInstanz().getConnection().createStatement();
-            statement.executeUpdate("INSERT INTO userdata (username, password) VALUES ('" + user.getNickname() + "', '" + user.getPsw() + "')");
+            String sql = "INSERT INTO userdata VALUES (?,?)";
+
+            preparedStatement = SingeltonConnection.getInstanz().getConnection().prepareStatement(sql);
+
+            preparedStatement.setString(1,user.getNickname());
+            preparedStatement.setString(2,user.getPsw());
+
+            preparedStatement.executeQuery();
 
             System.out.println(user.getNickname() + " has been registered successfully!");
         } catch (Exception e) {

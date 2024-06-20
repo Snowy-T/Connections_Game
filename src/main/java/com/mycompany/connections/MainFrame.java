@@ -99,7 +99,6 @@ public class MainFrame extends JFrame implements ActionListener, KeyListener {
             }else{
                 String username = loginPanel.txt_username.getText().trim();
                 String pass = "";
-
                 for(char c : loginPanel.txt_password.getPassword()){
                     pass += c;
                 }
